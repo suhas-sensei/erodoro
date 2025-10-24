@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+
+  /* Background tokens */
+  --bg-0: #0a0a0b;
+  --bg-1: #111113;
+  --bg-2: #18181b;
+  --bg-3: #1f1f23;
+
+  /* Border tokens */
+  --bd-0: #27272a;
+  --bd-1: #3f3f46;
+
+  /* Text tokens */
+  --txt-1: #fafafa;
+  --txt-2: #a1a1aa;
+  --txt-3: #71717a;
+  --txt-inv: #0a0a0b;
+
+  /* Action colors */
+  --blue: #3b82f6;
+  --blue-press: #2563eb;
+
+  --green: #22c55e;
+  --green-press: #16a34a;
+
+  --red: #ef4444;
+  --red-press: #dc2626;
+
+  --amber: #f59e0b;
+
+  /* Component tokens */
+  --chip: #27272a;
+  --disabled: #27272a;
+  --disabled-txt: #52525b;
+  --field: #18181b;
+  --field-border: #3f3f46;
+  --focus: #3b82f6;
+
+  /* Overlay */
+  --overlay: rgba(0, 0, 0, 0.75);
+}
+
+@layer base {
+  body {
+    @apply bg-bg0 text-txt1;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  .token-border {
+    border: 1px solid var(--bd-0);
+  }
+
+  .token-border-strong {
+    border: 1px solid var(--bd-1);
+  }
+
+  .focus-ring {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+}
