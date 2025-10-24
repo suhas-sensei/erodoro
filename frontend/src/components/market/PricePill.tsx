@@ -10,7 +10,7 @@ export function PricePill({
 }: {
   kind: "yes" | "no";
   label: string;
-  cents: number;
+  cents?: number;
   enabled?: boolean;
   active?: boolean;
   onClick?: () => void;
@@ -30,7 +30,7 @@ export function PricePill({
       className={`${base} ${color}`}
     >
       <span className="uppercase">{label}</span>
-      <span>{formatCents(cents)}</span>
+      {cents !== undefined && <span>{formatCents(cents)}</span>}
     </button>
   );
 }

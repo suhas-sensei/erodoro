@@ -6,9 +6,20 @@ import { Input } from "@/components/primitives/Input";
 import { Button } from "@/components/primitives/Button";
 import { useUI } from "@/lib/store";
 import { forwardRef } from "react";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
 
 export const Header = forwardRef<HTMLElement>(function Header(props, ref) {
-  const { openLogin } = useUI();
+  const { openCreateMarket } = useUI();
+  const { address, isConnected } = useAccount();
+  const { connect, connectors } = useConnect();
+  const { disconnect } = useDisconnect();
+
+  const handleConnect = () => {
+    const injectedConnector = connectors.find((c) => c.id === "injected");
+    if (injectedConnector) {
+      connect({ connector: injectedConnector });
+    }
+  };
 
   return (
     <header
@@ -39,18 +50,29 @@ export const Header = forwardRef<HTMLElement>(function Header(props, ref) {
 
         {/* Right side actions */}
         <div className="ml-auto flex items-center gap-3">
+          <Button variant="ghost" size="sm" onClick={openCreateMarket}>
+            Create Market
+          </Button>
           <a
             href="/help"
-            className="text-[14px] text-txt2 transition-colors hover:text-txt1"
+            className="hidden text-[14px] text-txt2 transition-colors hover:text-txt1 md:block"
           >
             Help
           </a>
-          <Button variant="ghost" size="sm" onClick={openLogin}>
-            Log in
-          </Button>
-          <Button variant="primary" size="sm" onClick={openLogin}>
-            Sign up
-          </Button>
+          {isConnected ? (
+            <>
+              <span className="hidden text-[13px] text-txt2 md:block">
+                {address?.slice(0, 6)}...{address?.slice(-4)}
+              </span>
+              <Button variant="ghost" size="sm" onClick={() => disconnect()}>
+                Disconnect
+              </Button>
+            </>
+          ) : (
+            <Button variant="primary" size="sm" onClick={handleConnect}>
+              Connect Wallet
+            </Button>
+          )}
         </div>
       </div>
     </header>
